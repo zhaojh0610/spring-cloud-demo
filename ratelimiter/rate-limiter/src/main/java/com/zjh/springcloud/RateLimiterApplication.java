@@ -1,4 +1,4 @@
-package com.zjh.ratelimiter;
+package com.zjh.springcloud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

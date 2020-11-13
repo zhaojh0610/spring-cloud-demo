@@ -13,7 +13,9 @@
     </properties>
 
     <modules>
-        <module>rate-limiter</module>
+        <module>ratelimiter/rate-limiter</module>
+        <module>ratelimiter/ratelimiter-annotation</module>
+        <module>ratelimiter/RateLimiter-test</module>
     </modules>
 
     <dependencies>
