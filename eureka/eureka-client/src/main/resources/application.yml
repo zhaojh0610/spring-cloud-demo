@@ -9,3 +9,5 @@ eureka:
       defaultZone: http://localhost:20000/eureka/
   instance:
     hostname: localhost
+    lease-renewal-interval-in-seconds: 50 #每隔配置的这个时间，向注册中心发送一条续约指令
+    lease-expiration-duration-in-seconds: 5  #如果过了配置的这个时间，还没有收到续约请求，判定服务过期
