@@ -24,7 +24,7 @@ public class Controller {
 
     @GetMapping("hello")
     public String hello() {
-        ServiceInstance instance = client.choose("eureka-client")
+        ServiceInstance instance = client.choose("eureka-client");
         if (instance == null) {
             return "No available instance";
         }
