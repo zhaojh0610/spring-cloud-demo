@@ -18,6 +18,7 @@
         <module>eureka/eureka-client</module>
         <module>eureka/eureka-consumer</module>
         <module>ribbon/rabbon-consumer</module>
+        <module>feign/feign-consumer</module>
     </modules>
 
     <dependencies>
