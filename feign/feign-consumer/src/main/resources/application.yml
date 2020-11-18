@@ -6,4 +6,16 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://test:test123@localhost:20000/eureka/
+      defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/
+feign-client:
+  ribbon:
+    # 每台机器最大重试次数
+    MaxAutoRetries: 2
+    # 可以在重试几台机器
+    MaxAutoRetriesNextServer: 2
+    # 连接超时
+    ConnectTimeout: 1000
+    # 业务处理超时
+    ReadTimeout: 2000
+    # 在所有HTTP method方法上重试  ***默认是false，谨慎开启，若开启一定要保证接口幂等性
+    OkToRetryOnAllOperations: true

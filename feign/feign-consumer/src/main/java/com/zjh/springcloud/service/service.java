@@ -12,4 +12,7 @@ public interface service {
 
     @GetMapping("/sayHi")
     public String sayHi();
+
+    @GetMapping("/retry")
+    public String retry(Integer timeout);
 }

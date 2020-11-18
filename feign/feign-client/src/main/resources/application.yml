@@ -2,10 +2,10 @@ spring:
   application:
     name: feign-client
 server:
-  port: 40002
+  port: 40004
 eureka:
   client:
     service-url:
-      defaultZone: http://test:test123@localhost:20000/eureka/
-  instance:
-    hostname: localhost
+      defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/
+    instance:
+      hostname: localhost

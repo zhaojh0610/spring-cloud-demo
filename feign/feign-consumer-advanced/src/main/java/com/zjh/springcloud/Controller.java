@@ -20,4 +20,10 @@ public class Controller {
     @GetMapping("sayHi")
     public String sayHi() {
         return iService.sayHi();
-    }}
+    }
+
+    @GetMapping("retry")
+    public String retry(Integer timeout) {
+        return iService.retry(timeout);
+    }
+}

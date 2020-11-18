@@ -35,8 +35,7 @@ public class EncryptUtils {
         String encrypt = aesEncrypt(content, KEY);
         System.out.println("加密后：" + encrypt);
 
-//        String decrypt = aesDecrypt(encrypt, KEY);
-        String decrypt = aesDecrypt(content, KEY);
+        String decrypt = aesDecrypt(encrypt, KEY);
 
         System.out.println("解密后：" + decrypt);
     }

@@ -2,6 +2,8 @@ package com.zjh.springcloud;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-public class Controller implements IService{
+public class Controller implements IService {
 
     @Value("${server.port}")
     private String port;
@@ -22,9 +24,22 @@ public class Controller implements IService{
     }
 
     @Override
-    public Friend sayHi(Friend friend) {
+    public Friend sayHi(@RequestBody Friend friend) {
         friend.setPort(port);
         log.info(" you are " + friend.getName());
         return friend;
+    }
+
+    @Override
+    public String retry(@RequestParam(name = "timeout") int timeout) {
+        while (timeout-- >= 0) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+
+            }
+        }
+        log.info("retry " + port);
+        return port;
     }
 }

@@ -18,4 +18,9 @@ public class Controller {
     public String sayHi() {
         return service.sayHi();
     }
+
+    @GetMapping("retry")
+    public String retry(Integer timeout) {
+        return service.retry(timeout);
+    }
 }
