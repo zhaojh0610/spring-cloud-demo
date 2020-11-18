@@ -1,5 +1,8 @@
 package com.zjh.springcloud.config;
 
+import com.zjh.springcloud.security.EurekaAuthenticationProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,8 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private EurekaUserDetailService eurekaUserDetailService;
+    @Autowired
+    private EurekaAuthenticationProvider eurekaAuthenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -20,22 +23,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         super.configure(http);
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(eurekaUserDetailService).passwordEncoder(new PasswordEncoder() {
-//            @Override
-//            public String encode(CharSequence rawPassword) {
-//                System.out.println("rawPassword---->" + rawPassword);
-//                return null;
-//            }
-//
-//            @Override
-//            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-//                System.out.println("rawPassword------>" + rawPassword);
-//                System.out.println("encodedPassword------>" + encodedPassword);
-//                return false;
-//            }
-//        });
-//        super.configure(auth);
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(eurekaAuthenticationProvider);
+        super.configure(auth);
+    }
 }

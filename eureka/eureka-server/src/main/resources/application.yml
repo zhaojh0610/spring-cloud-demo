@@ -3,8 +3,8 @@ spring:
     name: eureka-server
   security:
     user:
-      name: test
-      password: test123
+      name: cmbc
+      password: +oNI8PDN4SJ75tybPFatZg==
 server:
   port: 20000
 eureka:
@@ -16,3 +16,5 @@ eureka:
   server:
     enable-self-preservation: false # 强制关闭服务自保（自动开启服务自保将会失效）
     eviction-interval-timer-in-ms: 30000  #每隔多久触发一次服务剔除
+encrypt:
+  key: 1234567887654321
