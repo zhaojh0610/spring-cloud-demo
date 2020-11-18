@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: feign-consumer-advanced
+server:
+  port: 40003
+eureka:
+  client:
+    service-url:
+      defaultZone: http://test:test123@localhost:20000/eureka/
