@@ -33,6 +33,9 @@ hystrix:
             interruptOnTimeout: true
             # 取消的时候终止线程
             interruptOnFutureCancel: true
+      # 开启访问缓存功能 （默认是开启）
+    requestCache:
+      enable: true
     # 使用方法签名配置特定的方法超时时间
     MyService#retry(int):
       execution:
