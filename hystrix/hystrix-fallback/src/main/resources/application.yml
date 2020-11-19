@@ -1,0 +1,57 @@
+server:
+  port: 50000
+spring:
+  application:
+    name: hystrix-comsumer
+  main:
+    allow-bean-definition-overriding: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/
+  instance:
+    hostname: localhost
+feign:
+  hystrix:
+    # 开启feign下面hystrix功能
+    enabled: true
+hystrix:
+  command:
+    default:
+      fallback:
+        # 是否开启服务降级 默认是true（开启的）
+        enabled: true
+      execution:
+        timeout:
+          # 全局超时
+          enabled: true
+        isolation:
+          thread:
+            # 超时时间
+            timeoutInMilliseconds: 2000
+            # 超时以后终止线程
+            interruptOnTimeout: true
+            # 取消的时候终止线程
+            interruptOnFutureCancel: true
+    # 使用方法签名配置特定的方法超时时间
+    MyService#retry(int):
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+# ribbon全局配置
+feign-client:
+  ribbon:
+    # 每台机器最大重试次数
+    MaxAutoRetries: 0
+    # 可以在重试几台机器
+    MaxAutoRetriesNextServer: 0
+    # 连接超时
+    ConnectTimeout: 1000
+    # 业务处理超时
+    ReadTimeout: 9000
+    # 在所有HTTP method方法上重试  ***默认是false，谨慎开启，若开启一定要保证接口幂等性
+    OkToRetryOnAllOperations: false
+
+
+
