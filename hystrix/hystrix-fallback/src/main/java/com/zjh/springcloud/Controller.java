@@ -1,5 +1,7 @@
 package com.zjh.springcloud;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import lombok.Cleanup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class Controller {
 
     @GetMapping("/fallback")
     public String fallback() {
-        return myService.error();
+        return myService.fallback();
     }
 
     @GetMapping("/retry")
@@ -35,6 +37,18 @@ public class Controller {
         Friend friend = requestCacheService.requestCache(name);
         friend = requestCacheService.requestCache(name);
         return friend;
+    }
 
+
+    @GetMapping("/timeout")
+    @HystrixCommand(
+            fallbackMethod = "timeoutFallback",commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "3000")})
+    public String timeout(Integer timeout) {
+        return myService.retry(timeout);
+    }
+
+    public String timeoutFallback(Integer timeout) {
+        return "success";
     }
 }

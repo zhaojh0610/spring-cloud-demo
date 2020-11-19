@@ -20,5 +20,5 @@ public interface IService {
     public String retry(@RequestParam(name = "timeout") int timeout);
 
     @GetMapping("/error")
-    public String error();
+    public String fallback();
 }

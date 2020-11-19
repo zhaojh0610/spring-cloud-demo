@@ -44,7 +44,7 @@ public class Controller implements IService {
     }
 
     @Override
-    public String error() {
+    public String fallback() {
         throw new RuntimeException("black sheeep");
     }
 }
