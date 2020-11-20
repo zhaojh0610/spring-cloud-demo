@@ -2,7 +2,7 @@ server:
   port: 50000
 spring:
   application:
-    name: hystrix-comsumer
+    name: hystrix-consumer
   main:
     allow-bean-definition-overriding: true
 eureka:
@@ -64,3 +64,15 @@ feign:
   hystrix:
     # 开启Feign下面的Hystrix功能
     enabled: "true"
+# actuator暴露接口
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        # 暴露所有接口
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
