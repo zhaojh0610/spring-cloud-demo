@@ -32,11 +32,11 @@ public class Controller implements IService {
 
     @Override
     public String retry(@RequestParam(name = "timeout") int timeout) {
-        while (timeout-- >= 0) {
+        while (timeout-- > 0) {
             try {
+                log.info("你累了，休息一秒。。。");
                 Thread.sleep(1000);
             } catch (Exception e) {
-
             }
         }
         log.info("retry " + port);

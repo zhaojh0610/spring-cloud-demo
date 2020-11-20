@@ -11,50 +11,56 @@ eureka:
       defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/
   instance:
     hostname: localhost
-feign:
-  hystrix:
-    # 开启feign下面hystrix功能
-    enabled: true
 hystrix:
   command:
     default:
-      fallback:
-        # 是否开启服务降级 默认是true（开启的）
-        enabled: true
+      circuitBreaker:
+        # 正儿八经的参数
+        # 熔断的前提条件（请求的数量），在一定的时间窗口内，请求达到5个以后，才开始进行熔断判断
+        requestVolumeThreshold: "5"
+        # 超过50%的失败请求，则熔断开关开启
+        errorThresholdPercentage: "50"
+        # 当熔断开启以后，经过多少秒再进入半开状态
+        sleepWindowInMilliseconds: "15000"
+        # 打酱油的路人参数
+        # 开启熔断功能开关
+        enabled: "true"
+        # 强制开启熔断开关
+        forceOpen: "false"
+        # 强制关闭熔断开关
+        forceClosed: "false"
       execution:
+        # 全局超时
         timeout:
-          # 全局超时
-          enabled: true
+          enabled: "true"
         isolation:
           thread:
             # 超时时间
-            timeoutInMilliseconds: 2000
+            timeoutInMilliseconds: "1000"
             # 超时以后终止线程
-            interruptOnTimeout: true
+            interruptOnTimeout: "true"
             # 取消的时候终止线程
-            interruptOnFutureCancel: true
-      # 开启访问缓存功能 （默认是开启）
-    requestCache:
-      enable: true
-    # 使用方法签名配置特定的方法超时时间
-    MyService#retry(int):
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 5000
-# ribbon全局配置
+            interruptOnFutureCancel: "true"
+      # 是否开启服务降级
+      fallback:
+        enabled: "true"
+      metrics:
+        rollingStats:
+          # 配置时间窗口
+          timeInMilliseconds: "20000"
 feign-client:
   ribbon:
     # 每台机器最大重试次数
-    MaxAutoRetries: 0
-    # 可以在重试几台机器
-    MaxAutoRetriesNextServer: 0
+    MaxAutoRetries: "0"
+    # 可以再重试几台机器
+    MaxAutoRetriesNextServer: "0"
     # 连接超时
-    ConnectTimeout: 1000
+    ConnectTimeout: "1000"
     # 业务处理超时
-    ReadTimeout: 9000
-    # 在所有HTTP method方法上重试  ***默认是false，谨慎开启，若开启一定要保证接口幂等性
-    OkToRetryOnAllOperations: false
-
-
-
+    ReadTimeout: "8000"
+    # 在所有HTTP Method进行重试
+    OkToRetryOnAllOperations: "false"
+feign:
+  hystrix:
+    # 开启Feign下面的Hystrix功能
+    enabled: "true"

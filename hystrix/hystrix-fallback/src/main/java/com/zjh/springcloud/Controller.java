@@ -39,7 +39,6 @@ public class Controller {
         return friend;
     }
 
-
     @GetMapping("/timeout")
     @HystrixCommand(
             fallbackMethod = "timeoutFallback",commandProperties = {
