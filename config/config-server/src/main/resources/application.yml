@@ -1,0 +1,16 @@
+server:
+  port: 60000
+spring:
+  application:
+    name: config-consumer
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/zhaojh0610/config-repo.git
+          # 强制拉取资源文件
+          force-pull: true
+#          username: zhaojh0610@163.com
+#          password: Zjh072144.0
+#          # 指定目录下(可以有多个)  folder1,folder2
+#          search-paths:
