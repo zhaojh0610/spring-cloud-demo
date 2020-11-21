@@ -1,0 +1,14 @@
+server:
+  port: 61000
+
+myWords: ${words}
+
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      uri: http://localhost:60000
+      profile: prod
+      label: master
+      name: config-consumer
