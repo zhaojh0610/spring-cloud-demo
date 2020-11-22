@@ -1,0 +1,42 @@
+server:
+  port: 61001
+
+myWords: ${words}
+
+spring:
+  application:
+    name: config-bus-client
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    config:
+      # eureka注册中心找到config服务拉取配置
+      discovery:
+        enabled: true
+        service-id: config-bus-server
+      profile: prod
+      label: master
+      name: config-consumer
+    stream:
+      # 默认绑定rabbit
+      default-binder: rabbit
+
+#      直连config中心的配置方式
+#      uri: http://localhost:60000
+
+# 暴露端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/
