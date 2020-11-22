@@ -2,7 +2,7 @@ server:
   port: 60000
 spring:
   application:
-    name: config-consumer
+    name: config-server
   cloud:
     config:
       server:

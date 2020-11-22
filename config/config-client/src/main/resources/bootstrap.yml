@@ -8,10 +8,15 @@ spring:
     name: config-client
   cloud:
     config:
-      uri: http://localhost:60000
+      # 到eureka注册中心找到config服务拉取配置
+      discovery:
+        enabled: true
+        service-id: config-server-eureka
       profile: prod
       label: master
       name: config-consumer
+#      直连config中心的配置方式
+#      uri: http://localhost:60000
 
 # 暴露端点
 management:
@@ -22,3 +27,7 @@ management:
   endpoint:
     health:
       show-details: always
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/

@@ -1,0 +1,16 @@
+server:
+  port: 60001
+spring:
+  application:
+    name: config-server-eureka
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/zhaojh0610/config-repo.git
+          # 强制拉取
+          force-pull: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/
