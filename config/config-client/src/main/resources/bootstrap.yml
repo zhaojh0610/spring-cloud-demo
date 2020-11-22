@@ -15,6 +15,7 @@ spring:
       profile: prod
       label: master
       name: config-consumer
+
 #      直连config中心的配置方式
 #      uri: http://localhost:60000
 

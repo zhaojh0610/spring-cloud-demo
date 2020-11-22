@@ -17,6 +17,9 @@ public class Controller {
     @Value("${myWords}")
     private String words;
 
+    @Value("${food}")
+    private String food;
+
     @GetMapping("/name")
     public String getName() {
         return name;
@@ -27,4 +30,8 @@ public class Controller {
         return words;
     }
 
+    @GetMapping("dinner")
+    public String getDinner() {
+        return food;
+    }
 }
