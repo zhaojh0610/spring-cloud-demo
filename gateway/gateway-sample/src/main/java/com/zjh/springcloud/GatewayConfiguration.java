@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 
+import java.time.ZonedDateTime;
+
 /**
  * @author zhaojh
  * @date 2020/11/23 20:42
@@ -24,6 +26,13 @@ public class GatewayConfiguration {
                         .filters(f -> f.stripPrefix(2)
                                 .addResponseHeader("java-param", "gateway-config")
                         )
+                        .uri("lb://FEIGN-CLIENT")
+                )
+                .route(r -> r.path("/seckill/**")
+                        .and().after(ZonedDateTime.now().plusMinutes(1))
+//                        .and().before()
+//                        .and().between()
+                        .filters(f -> f.stripPrefix(1))
                         .uri("lb://FEIGN-CLIENT")
                 ).build();
     }
