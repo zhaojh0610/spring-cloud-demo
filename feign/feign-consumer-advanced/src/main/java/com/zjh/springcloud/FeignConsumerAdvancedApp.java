@@ -13,10 +13,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableFeignClients
-public class FeignConsumerApp {
+public class FeignConsumerAdvancedApp {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(FeignConsumerApp.class)
+        new SpringApplicationBuilder(FeignConsumerAdvancedApp.class)
                 .web(WebApplicationType.SERVLET)
                 .run(args);
     }
