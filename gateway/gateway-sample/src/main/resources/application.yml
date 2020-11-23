@@ -10,6 +10,13 @@ spring:
           enabled: true
           # 匹配名称全部转为小写
           lower-case-service-id: true
+      routes:
+      - id: feignclient
+        uri: lb://FEIGN-CLIENT
+        predicates:
+        - Path=/yml/**
+        filters:
+        - StripPrefix=1
 
 eureka:
   client:
