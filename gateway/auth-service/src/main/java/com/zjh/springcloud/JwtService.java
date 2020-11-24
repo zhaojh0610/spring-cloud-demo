@@ -25,6 +25,7 @@ public class JwtService {
 
     /**
      * 生成token
+     *
      * @param account
      * @return
      */
@@ -43,6 +44,7 @@ public class JwtService {
 
     /**
      * 校验token
+     *
      * @param token
      * @param username
      * @return

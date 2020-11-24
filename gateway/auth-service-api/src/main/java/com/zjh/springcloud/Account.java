@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author zhaojh
  * @date 2020/11/24 15:43
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account{
+public class Account implements Serializable {
 
     private String username;
 

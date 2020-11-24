@@ -1,9 +1,7 @@
 package com.zjh.springcloud;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zhaojh
@@ -13,15 +11,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @FeignClient("auth-service")
 public interface AuthService {
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     @ResponseBody
-    public AuthResponse login(@RequestParam("username") String username, @RequestParam("password") String password);
+    AuthResponse login(@RequestParam("username") String username, @RequestParam("password") String password);
 
-    @RequestMapping("/verify")
-    public AuthResponse verify(@RequestParam("token") String token, @RequestParam("username") String username);
+    @GetMapping("/verify")
+    AuthResponse verify(@RequestParam("token") String token, @RequestParam("username") String username);
 
-    @RequestMapping("/refresh")
+    @PostMapping("/refresh")
     @ResponseBody
-    public AuthResponse refresh(@RequestParam("refresh") String refresh);
+    AuthResponse refresh(@RequestParam("refresh") String refresh);
 
 }

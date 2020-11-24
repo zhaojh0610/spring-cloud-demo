@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthResponse {
-    private String code;
+    private Long code;
     private Account account;
 }

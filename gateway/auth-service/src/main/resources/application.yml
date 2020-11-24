@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: auth-service
+  redis:
+    host: 192.168.120.128
+    port: 6379
+    database: 0
+server:
+  port: 65100
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/
+logging:
+  file: ${spring.application.name}.log
+info:
+  app:
+    name: auth-service
+    description: test
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  security:
+    enabled: false

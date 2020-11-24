@@ -20,16 +20,20 @@ public class GatewayConfiguration {
     @Autowired
     private TimeFilter timeFilter;
 
+    @Autowired
+    private AuthFilter authFilter;
+
     @Bean
     @Order
     public RouteLocator customizedRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(r -> r.path("/java/hxj/**")
+                .route(r -> r.path("/java/**")
                         .and().method(HttpMethod.GET)
                         .and().header("name")
-                        .filters(f -> f.stripPrefix(2)
+                        .filters(f -> f.stripPrefix(1)
                                 .addResponseHeader("java-param", "gateway-config")
                                 .filter(timeFilter)
+                                .filter(authFilter)
                         )
                         .uri("lb://FEIGN-CLIENT")
                 )
