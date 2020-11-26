@@ -1,0 +1,17 @@
+server:
+  port: 62001
+spring:
+  application:
+    name: sleuth-traceB
+eureka:
+  client:
+    service-url:
+      defaultZone: http://cmbc:+oNI8PDN4SJ75tybPFatZg==@localhost:20000/eureka/
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
