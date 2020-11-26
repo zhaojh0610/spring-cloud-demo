@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: sleuth-traceB
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    base-url: http://localhost:62100
 eureka:
   client:
     service-url:
@@ -15,3 +20,7 @@ management:
     web:
       exposure:
         include: "*"
+info:
+  app:
+    name: sleuth-traceA
+    description: test

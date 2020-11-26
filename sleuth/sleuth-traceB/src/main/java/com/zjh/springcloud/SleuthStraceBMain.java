@@ -32,7 +32,7 @@ public class SleuthStraceBMain {
     private RestTemplate restTemplate;
 
     @RequestMapping("/traceB")
-    public String traceA() {
+    public String traceB() {
         log.info("-------traceB");
         return "trancB";
     }
