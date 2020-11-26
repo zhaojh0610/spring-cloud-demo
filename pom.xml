@@ -35,13 +35,14 @@
         <module>gateway/auth-service</module>
         <module>sleuth/sleuth-traceA</module>
         <module>sleuth/sleuth-traceB</module>
+        <module>sleuth/zipkin-server</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
+            <version>1.18.16</version>
         </dependency>
     </dependencies>
 
