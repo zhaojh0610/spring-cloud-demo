@@ -36,6 +36,7 @@
         <module>sleuth/sleuth-traceA</module>
         <module>sleuth/sleuth-traceB</module>
         <module>sleuth/zipkin-server</module>
+        <module>stream/stream-sample</module>
     </modules>
 
     <dependencies>
