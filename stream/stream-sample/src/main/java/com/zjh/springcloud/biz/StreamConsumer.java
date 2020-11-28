@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.Header;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -22,7 +25,8 @@ import java.util.concurrent.atomic.AtomicInteger;
         DelayedTopic.class,
         ErrorTopic.class,
         RequeueTopic.class,
-        DlqTopic.class
+        DlqTopic.class,
+        FallbackTopic.class
 })
 public class StreamConsumer {
 
@@ -82,5 +86,25 @@ public class StreamConsumer {
             log.info("Dlq what's your problem");
             throw new RuntimeException("I'm not ok!");
         }
+    }
+
+    //  fallback + 升级版
+    @StreamListener(FallbackTopic.INPUT)
+    public void consumerFallbackMessage(MessageBean message, @Header("version") String version) {
+        log.info("fallback are you ok?");
+        if ("1.0".equals(version)) {
+            log.info("fallback fine, thank you ,and you");
+        } else if ("2.0".equals(version)) {
+            log.info("fallback what's your problem");
+            throw new RuntimeException("I'm not ok!");
+        } else {
+            log.info("fallback -version={}", version);
+        }
+    }
+
+    @ServiceActivator(inputChannel = "fallback-topic.fallback-group.errors")
+    public void fallback(Message message) {
+        log.info("fallback entered");
+
     }
 }

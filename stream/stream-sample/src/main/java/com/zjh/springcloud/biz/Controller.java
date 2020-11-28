@@ -36,18 +36,23 @@ public class Controller {
     @Autowired
     private DlqTopic dlqTopicProducer;
 
+    @Autowired
+    private FallbackTopic fallbackTopicProducer;
+    //  消息广播
     @PostMapping("/send")
     public void sendMessage(@RequestParam("body") String body) {
         Message<String> message = MessageBuilder.withPayload(body).build();
         producer.output().send(message);
     }
 
+    //  消费组和消息分区
     @PostMapping("/sendToGroup")
     public void sendToGroup(@RequestParam("body") String body) {
         Message<String> message = MessageBuilder.withPayload(body).build();
         groupProducerProducer.output().send(message);
     }
 
+    //  延迟消息
     @PostMapping("/sendDM")
     public void sendDelayedMessage(@RequestParam("body") String body, @RequestParam("seconds") Integer seconds) {
         MessageBean message = new MessageBean();
@@ -59,6 +64,7 @@ public class Controller {
                 .build());
     }
 
+    //  异常重试（单机版）
     @PostMapping("/error")
     public void sendErrorMessage(@RequestParam("body") String body) {
         MessageBean message = new MessageBean();
@@ -69,6 +75,7 @@ public class Controller {
                 .build());
     }
 
+    //  异常重试（异常消息重新放入队列）
     @PostMapping("/requeue")
     public void sendRequeueMessage(@RequestParam("body") String body) {
         MessageBean message = new MessageBean();
@@ -79,6 +86,7 @@ public class Controller {
                 .build());
     }
 
+    // 死信队列 测试
     @PostMapping("/dlq")
     public void sendMessageToDlq(@RequestParam("body") String body) {
         MessageBean message = new MessageBean();
@@ -86,6 +94,18 @@ public class Controller {
         log.info("dlq ready to send error message");
         dlqTopicProducer.output().send(MessageBuilder
                 .withPayload(message)
+                .build());
+    }
+
+    // fallback + 升版
+    @PostMapping("/fallback")
+    public void sendMessageToFallback(@RequestParam("body") String body, @RequestParam("version") String version) {
+        MessageBean message = new MessageBean();
+        message.setPayload(body);
+        log.info("dlq ready to send error message");
+        fallbackTopicProducer.output().send(MessageBuilder
+                .withPayload(message)
+                .setHeader("version", version)
                 .build());
     }
 }
