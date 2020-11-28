@@ -49,7 +49,14 @@ spring:
           destination: delayed-topic
         delayed-consumer:
           destination: delayed-topic
-
+        ####  异常消息（单机版重试）
+        error-producer:
+          destination: error-topic
+        error-consumer:
+          destination: error-topic
+          consumer:
+            #### 最大尝试重试次数（包含第一次消费消息）
+            max-attempts: 2
 management:
   endpoint:
     health:

@@ -26,6 +26,9 @@ public class Controller {
     @Autowired
     private DelayedTopic delayedTopic;
 
+    @Autowired
+    private ErrorTopic errorTopic;
+
     @PostMapping("/send")
     public void sendMessage(@RequestParam("body") String body) {
         Message<String> message = MessageBuilder.withPayload(body).build();
@@ -46,6 +49,16 @@ public class Controller {
         delayedTopic.output().send(MessageBuilder
                 .withPayload(message)
                 .setHeader("x-delay", 1000 * seconds)
+                .build());
+    }
+
+    @PostMapping("/error")
+    public void sendErrorMessage(@RequestParam("body") String body) {
+        MessageBean message = new MessageBean();
+        message.setPayload(body);
+        log.info("ready to send error message");
+        errorTopic.output().send(MessageBuilder
+                .withPayload(message)
                 .build());
     }
 

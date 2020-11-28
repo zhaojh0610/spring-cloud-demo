@@ -6,6 +6,8 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @author zhaojh
  * @date 2020/11/27 21:57
@@ -16,9 +18,12 @@ import org.springframework.cloud.stream.messaging.Sink;
         Sink.class,
         MyTopic.class,
         GroupTopic.class,
-        DelayedTopic.class
+        DelayedTopic.class,
+        ErrorTopic.class
 })
 public class StreamConsumer {
+
+    private AtomicInteger count = new AtomicInteger(1);
 
     @StreamListener(Sink.INPUT)
     public void consumer(Object payload) {
@@ -39,5 +44,19 @@ public class StreamConsumer {
     public void consumerDelayedMessage(MessageBean message) {
         log.info(" group message consumed successfully, payload={}", message.getPayload());
     }
+
+    @StreamListener(ErrorTopic.INPUT)
+    public void consumerErrordMessage(MessageBean message) {
+        log.info("are you ok?");
+        if (count.incrementAndGet() % 3 == 0) {
+            log.info("fine, thank you ,and you");
+            count.set(0);
+        } else {
+            log.info("what's your problem");
+            throw new RuntimeException("I'm not ok!");
+
+        }
+    }
+
 
 }
