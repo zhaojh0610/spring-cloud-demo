@@ -8,6 +8,13 @@ spring:
     username: guest
     password: guest
     port: 5672
+  cloud:
+    stream:
+      bindings:
+        myTopic-producer:
+          destination: broadcast
+        myTopic-consumer:
+          destination: broadcast
 management:
   endpoint:
     health:

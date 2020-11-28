@@ -13,13 +13,19 @@ import org.springframework.cloud.stream.messaging.Sink;
  */
 @Slf4j
 @EnableBinding(value = {
-        Sink.class
+        Sink.class,
+        MyTopic.class
 })
 public class StreamConsumer {
 
     @StreamListener(Sink.INPUT)
     public void consumer(Object payload) {
         log.info("message consumed successfully, payload={}", payload);
+    }
+
+    @StreamListener(MyTopic.INPUT)
+    public void consumerMyMessage(Object payload) {
+        log.info(" my message consumed successfully, payload={}", payload);
     }
 
 
