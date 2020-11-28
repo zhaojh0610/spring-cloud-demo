@@ -1,5 +1,5 @@
 server:
-  port: 63000
+  port: 63004
 spring:
   application:
     name: stream-sample
@@ -11,10 +11,33 @@ spring:
   cloud:
     stream:
       bindings:
+        # 绑定channel到broadcast
         myTopic-producer:
           destination: broadcast
+        # 绑定channel到broadcast
         myTopic-consumer:
           destination: broadcast
+        # 消息分组示例
+        group-producer:
+          destination: group-topic
+          ## 设置生产者消息分区个数为2
+          producer:
+            partition-count: 2
+            ## SpEL （key resolver）
+            ## 只有索引参数为1的节点（消费者），才能消费消息
+            partition-key-expression: "1"
+        group-consumer:
+          destination: group-topic
+          # 指定当前消费者示例属于哪个消费组
+          group: Group-A
+          ## 消息分区配置
+          consumer:
+            ## 开启消息分区功能
+            partitioned: true
+      # 当前消费者示例总数
+      instance-count: 2
+      # 当前实例的索引号，最大值：instance-count-1
+      instance-index: 1
 management:
   endpoint:
     health:

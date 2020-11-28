@@ -14,7 +14,8 @@ import org.springframework.cloud.stream.messaging.Sink;
 @Slf4j
 @EnableBinding(value = {
         Sink.class,
-        MyTopic.class
+        MyTopic.class,
+        GroupTopic.class
 })
 public class StreamConsumer {
 
@@ -26,6 +27,11 @@ public class StreamConsumer {
     @StreamListener(MyTopic.INPUT)
     public void consumerMyMessage(Object payload) {
         log.info(" my message consumed successfully, payload={}", payload);
+    }
+
+    @StreamListener(GroupTopic.INPUT)
+    public void consumerGroupMessage(Object payload) {
+        log.info(" group message consumed successfully, payload={}", payload);
     }
 
 

@@ -18,9 +18,19 @@ public class Controller {
     @Autowired
     private MyTopic producer;
 
+    @Autowired
+    private GroupTopic groupProducer;
+
     @PostMapping("/send")
     public void sendMessage(@RequestParam("body") String body) {
         Message<String> message = MessageBuilder.withPayload(body).build();
         producer.output().send(message);
     }
+
+    @PostMapping("/sendToGroup")
+    public void sendToGroup(@RequestParam("body") String body) {
+        Message<String> message = MessageBuilder.withPayload(body).build();
+        groupProducer.output().send(message);
+    }
+
 }
