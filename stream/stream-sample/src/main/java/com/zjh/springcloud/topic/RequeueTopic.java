@@ -1,4 +1,4 @@
-package com.zjh.springcloud.biz;
+package com.zjh.springcloud.topic;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
@@ -10,14 +10,14 @@ import org.springframework.messaging.SubscribableChannel;
  * @date 2020/11/28 9:27
  * @description
  */
-public interface ErrorTopic {
+public interface RequeueTopic {
 
-    String INPUT = "error-consumer";
-    String OUTPUT = "error-producer";
+    String INPUT = "requeue-consumer";
+    String OUTPUT = "requeue-producer";
 
-    @Input(ErrorTopic.INPUT)
+    @Input(RequeueTopic.INPUT)
     SubscribableChannel input();
 
-    @Output(ErrorTopic.OUTPUT)
+    @Output(RequeueTopic.OUTPUT)
     MessageChannel output();
 }

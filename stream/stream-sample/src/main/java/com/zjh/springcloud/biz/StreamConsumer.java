@@ -1,6 +1,7 @@
 package com.zjh.springcloud.biz;
 
 
+import com.zjh.springcloud.topic.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -19,7 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
         MyTopic.class,
         GroupTopic.class,
         DelayedTopic.class,
-        ErrorTopic.class
+        ErrorTopic.class,
+        RequeueTopic.class
 })
 public class StreamConsumer {
 
@@ -45,6 +47,7 @@ public class StreamConsumer {
         log.info(" group message consumed successfully, payload={}", message.getPayload());
     }
 
+    //  异常本地重试（单机版）
     @StreamListener(ErrorTopic.INPUT)
     public void consumerErrordMessage(MessageBean message) {
         log.info("are you ok?");
@@ -54,9 +57,18 @@ public class StreamConsumer {
         } else {
             log.info("what's your problem");
             throw new RuntimeException("I'm not ok!");
-
         }
     }
 
+    //  异常重试（联机版-重新入列）
+    @StreamListener(RequeueTopic.INPUT)
+    public void consumerRequeueMessage(MessageBean message) {
+        log.info("are you ok?");
+        try {
+            Thread.sleep(3000L);
+        } catch (Exception e) {
+        }
+        throw new RuntimeException();
+    }
 
 }

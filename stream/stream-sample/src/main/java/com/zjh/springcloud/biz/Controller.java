@@ -1,5 +1,6 @@
 package com.zjh.springcloud.biz;
 
+import com.zjh.springcloud.topic.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
@@ -28,6 +29,9 @@ public class Controller {
 
     @Autowired
     private ErrorTopic errorTopic;
+
+    @Autowired
+    private RequeueTopic requeueTopic;
 
     @PostMapping("/send")
     public void sendMessage(@RequestParam("body") String body) {
@@ -62,4 +66,13 @@ public class Controller {
                 .build());
     }
 
+    @PostMapping("/requeue")
+    public void sendRequeueMessage(@RequestParam("body") String body) {
+        MessageBean message = new MessageBean();
+        message.setPayload(body);
+        log.info("ready to send error message");
+        requeueTopic.output().send(MessageBuilder
+                .withPayload(message)
+                .build());
+    }
 }
