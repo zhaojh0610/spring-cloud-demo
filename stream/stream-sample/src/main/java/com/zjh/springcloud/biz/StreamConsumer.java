@@ -15,7 +15,8 @@ import org.springframework.cloud.stream.messaging.Sink;
 @EnableBinding(value = {
         Sink.class,
         MyTopic.class,
-        GroupTopic.class
+        GroupTopic.class,
+        DelayedTopic.class
 })
 public class StreamConsumer {
 
@@ -34,5 +35,9 @@ public class StreamConsumer {
         log.info(" group message consumed successfully, payload={}", payload);
     }
 
+    @StreamListener(DelayedTopic.INPUT)
+    public void consumerDelayedMessage(MessageBean message) {
+        log.info(" group message consumed successfully, payload={}", message.getPayload());
+    }
 
 }
