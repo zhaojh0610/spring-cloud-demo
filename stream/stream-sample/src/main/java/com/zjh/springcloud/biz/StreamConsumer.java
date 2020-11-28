@@ -21,7 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
         GroupTopic.class,
         DelayedTopic.class,
         ErrorTopic.class,
-        RequeueTopic.class
+        RequeueTopic.class,
+        DlqTopic.class
 })
 public class StreamConsumer {
 
@@ -47,7 +48,7 @@ public class StreamConsumer {
         log.info(" group message consumed successfully, payload={}", message.getPayload());
     }
 
-    //  异常本地重试（单机版）
+    //  异常重试（单机版）
     @StreamListener(ErrorTopic.INPUT)
     public void consumerErrordMessage(MessageBean message) {
         log.info("are you ok?");
@@ -71,4 +72,15 @@ public class StreamConsumer {
         throw new RuntimeException();
     }
 
+    //  异常重试（单机版）
+    @StreamListener(DlqTopic.INPUT)
+    public void consumerDlqMessage(MessageBean message) {
+        log.info("Dlq are you ok?");
+        if (count.incrementAndGet() % 3 == 0) {
+            log.info("Dlq fine, thank you ,and you");
+        } else {
+            log.info("Dlq what's your problem");
+            throw new RuntimeException("I'm not ok!");
+        }
+    }
 }

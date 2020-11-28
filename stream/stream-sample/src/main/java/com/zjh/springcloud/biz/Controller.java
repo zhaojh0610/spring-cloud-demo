@@ -22,16 +22,19 @@ public class Controller {
     private MyTopic producer;
 
     @Autowired
-    private GroupTopic groupProducer;
+    private GroupTopic groupProducerProducer;
 
     @Autowired
-    private DelayedTopic delayedTopic;
+    private DelayedTopic delayedTopicProducer;
 
     @Autowired
-    private ErrorTopic errorTopic;
+    private ErrorTopic errorTopicProducer;
 
     @Autowired
-    private RequeueTopic requeueTopic;
+    private RequeueTopic requeueTopicProducer;
+
+    @Autowired
+    private DlqTopic dlqTopicProducer;
 
     @PostMapping("/send")
     public void sendMessage(@RequestParam("body") String body) {
@@ -42,7 +45,7 @@ public class Controller {
     @PostMapping("/sendToGroup")
     public void sendToGroup(@RequestParam("body") String body) {
         Message<String> message = MessageBuilder.withPayload(body).build();
-        groupProducer.output().send(message);
+        groupProducerProducer.output().send(message);
     }
 
     @PostMapping("/sendDM")
@@ -50,7 +53,7 @@ public class Controller {
         MessageBean message = new MessageBean();
         message.setPayload(body);
         log.info("ready to send delayed message");
-        delayedTopic.output().send(MessageBuilder
+        delayedTopicProducer.output().send(MessageBuilder
                 .withPayload(message)
                 .setHeader("x-delay", 1000 * seconds)
                 .build());
@@ -61,7 +64,7 @@ public class Controller {
         MessageBean message = new MessageBean();
         message.setPayload(body);
         log.info("ready to send error message");
-        errorTopic.output().send(MessageBuilder
+        errorTopicProducer.output().send(MessageBuilder
                 .withPayload(message)
                 .build());
     }
@@ -71,7 +74,17 @@ public class Controller {
         MessageBean message = new MessageBean();
         message.setPayload(body);
         log.info("ready to send error message");
-        requeueTopic.output().send(MessageBuilder
+        requeueTopicProducer.output().send(MessageBuilder
+                .withPayload(message)
+                .build());
+    }
+
+    @PostMapping("/dlq")
+    public void sendMessageToDlq(@RequestParam("body") String body) {
+        MessageBean message = new MessageBean();
+        message.setPayload(body);
+        log.info("dlq ready to send error message");
+        dlqTopicProducer.output().send(MessageBuilder
                 .withPayload(message)
                 .build());
     }
